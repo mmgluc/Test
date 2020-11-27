@@ -58,5 +58,6 @@ for each in np.arange(tick):
 
     output=[]
     custo=[]
-    
+
+#Insira abaixo o caminho para arquivo output
 df1.to_csv(r'INSIRA AQUI O CAMINHO.txt', header=None, index=None, sep=',')
