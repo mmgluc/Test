@@ -1,0 +1,62 @@
+#Notebook para teste de Load Balancer
+import pandas as pd
+import numpy as np
+
+#Insira abaixo o caminho para o arquivo input
+path = r'INSIRA AQUI O CAMINHO.txt'
+
+#Lendo arquivo
+df = pd.read_csv(path, header=None)
+df.columns = ['Input']
+
+#ttask e Umax do arquivo
+ttask = df.iloc[0]
+Umax = df.iloc[1]
+ttask = np.reshape(np.array(ttask), len(np.array(ttask)))
+Umax = np.reshape(np.array(Umax), len(np.array(Umax)))
+
+user = df.iloc[2:]
+users=pd.Series(np.reshape(np.array(user), len(np.array(user))))
+
+tick=len(users)
+nusers = 0
+nservidor=0
+output=[]
+custo=[]
+df1 = pd.DataFrame()
+df2 = pd.DataFrame()
+for each in np.arange(tick):
+    nusers+=users[each]
+
+    #Distribuição de usuários
+    if (nusers//Umax) is 0:
+        nservidor += 1
+        custo.append(ttask)
+        
+    if (nusers//Umax) is not 0:
+        nservidores=nusers // Umax
+        
+        
+    if (nusers%Umax) is 0:
+        i=0
+        while i<(nusers//Umax):
+            output.append(Umax)
+            custo.append(ttask)
+            i+=1
+        
+    if (nusers%Umax) is not 0:
+        i=0
+        while i<(nusers//Umax):
+            output.append(Umax)
+            custo.append(ttask)
+            i+=1
+        output.append(nusers%Umax)
+   
+
+    df1 = df1.append(pd.Series(output), ignore_index=True)
+    df2 = df2.append(pd.Series(custo), ignore_index=True)
+
+    output=[]
+    custo=[]
+    
+df1.to_csv(r'INSIRA AQUI O CAMINHO.txt', header=None, index=None, sep=',')
