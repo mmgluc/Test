@@ -9,15 +9,17 @@ path = r'INSIRA AQUI O CAMINHO.txt'
 df = pd.read_csv(path, header=None)
 df.columns = ['Input']
 
-#ttask e Umax do arquivo
+#Atribuindo ttask e Umax do arquivo
 ttask = df.iloc[0]
 Umax = df.iloc[1]
 ttask = np.reshape(np.array(ttask), len(np.array(ttask)))
 Umax = np.reshape(np.array(Umax), len(np.array(Umax)))
 
+#Atribuindo sequencia de users listados
 user = df.iloc[2:]
 users=pd.Series(np.reshape(np.array(user), len(np.array(user))))
 
+#Atribuindo número de iterações, criando listas e dataframe
 tick=len(users)
 nusers = 0
 nservidor=0
@@ -28,36 +30,37 @@ df2 = pd.DataFrame()
 for each in np.arange(tick):
     nusers+=users[each]
 
-    #Distribuição de usuários
+    #Caso qtd usuários menor que Umax, divisao inteira
     if (nusers//Umax) is 0:
         nservidor += 1
         custo.append(ttask)
-        
+     
+     #Caso qtd de usuários maior que Umax, divisao nao inteira
     if (nusers//Umax) is not 0:
         nservidores=nusers // Umax
         
-        
+     #Se numero de usuarios facilmente distribuido por Umax, divisao inteira
     if (nusers%Umax) is 0:
         i=0
         while i<(nusers//Umax):
             output.append(Umax)
-            custo.append(ttask)
+            #custo.append(ttask)
             i+=1
-        
+     #Se numero de usuarios não facilmente distribuido por Umax, divisao nao inteira
     if (nusers%Umax) is not 0:
         i=0
         while i<(nusers//Umax):
             output.append(Umax)
-            custo.append(ttask)
+            #custo.append(ttask)
             i+=1
         output.append(nusers%Umax)
    
-
+    #Posicionando distribuicao de usuarios no dataframe
     df1 = df1.append(pd.Series(output), ignore_index=True)
-    df2 = df2.append(pd.Series(custo), ignore_index=True)
+    #df2 = df2.append(pd.Series(custo), ignore_index=True)
 
     output=[]
-    custo=[]
+    #custo=[]
 
 #Insira abaixo o caminho para arquivo output
 df1.to_csv(r'INSIRA AQUI O CAMINHO.txt', header=None, index=None, sep=',')
